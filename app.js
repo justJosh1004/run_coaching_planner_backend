@@ -2,13 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const userRoutes = require('./routes/user');
+
 const app = express();
 
 mongoose
   .connect(
     `mongodb+srv://josh:${
       process.env.MONGO_ATLAS_PW
-    }@cluster0-afuh4.mongodb.net/test?retryWrites=true&w=majority`,
+    }@cluster0-afuh4.mongodb.net/planner?retryWrites=true&w=majority`,
     { useCreateIndex: true, useNewUrlParser: true }
   )
   .then(() => {
@@ -32,5 +34,6 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use('/api/users', userRoutes);
 
 module.exports = app;
